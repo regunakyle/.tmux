@@ -407,6 +407,8 @@ tmux_conf_urlscan_options="--compact --dedupe"
 # move status line to top
 #set -g status-position top
 
+# Set default shell to Zsh
+set-option -g default-shell /bin/zsh
 
 # -- tpm -----------------------------------------------------------------------
 
