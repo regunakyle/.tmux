@@ -394,9 +394,10 @@ set -g mouse on
 #set -g status-keys vi
 #set -g mode-keys vi
 
-# replace C-b by C-a instead of using both prefixes
+# Use C-b as prefix instead of C-a
+# C-a becomes inner prefix key
 set -gu prefix2
-unbind C-a
+bind-key -n C-a send-prefix
 # unbind C-b
 # set -g prefix C-a
 # bind C-a send-prefix
