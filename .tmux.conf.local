@@ -6,6 +6,10 @@
 #         without any warranty.
 #         Copyright 2012— Gregory Pakosz (@gpakosz).
 
+# -- custom changes ----------------------------------------------------------
+
+# As required by pi-mono
+set -g extended-keys-format csi-u
 
 # -- bindings ------------------------------------------------------------------
 
