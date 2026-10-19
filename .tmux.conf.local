@@ -6,11 +6,6 @@
 #         without any warranty.
 #         Copyright 2012— Gregory Pakosz (@gpakosz).
 
-# -- custom changes ----------------------------------------------------------
-
-# As required by pi-mono
-set -g extended-keys on
-set -g extended-keys-format csi-u
 
 # -- bindings ------------------------------------------------------------------
 
@@ -404,8 +399,26 @@ tmux_conf_urlscan_options="--compact --dedupe"
 
 # this is the place to override or undo settings
 
+# As required by pi-mono
+set -g extended-keys on
+set -g extended-keys-format csi-u
+
 # increase history size
 set -g history-limit 25000
+
+# when copying with the mouse, stay in copy mode at the current position:
+# do not cancel copy mode and do not scroll back to the bottom of the pane
+bind -T copy-mode MouseDragEnd1Pane send -X copy-selection
+bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-selection
+
+# allow programs in panes to set the clipboard with OSC 52
+# (with 'external', tmux drops OSC 52 sequences emitted by programs;
+# only tmux's own copies reach the terminal)
+set -g set-clipboard on
+
+# do not let programs read the clipboard back (OSC 52 '?')
+# with this, programs can only write the clipboard, never read it
+set -g get-clipboard off
 
 # start with mouse mode enabled
 set -g mouse on
@@ -415,8 +428,7 @@ set -g mouse on
 #set -g status-keys vi
 #set -g mode-keys vi
 
-# Use C-b as prefix instead of C-a
-# C-a becomes inner prefix key
+# Use C-b as prefix. C-a becomes inner prefix key (i.e. double C-b)
 set -gu prefix2
 bind-key -n C-a send-prefix
 # unbind C-b
