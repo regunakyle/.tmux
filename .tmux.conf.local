@@ -406,10 +406,13 @@ set -g extended-keys-format csi-u
 # increase history size
 set -g history-limit 25000
 
-# when copying with the mouse, stay in copy mode at the current position:
-# do not cancel copy mode and do not scroll back to the bottom of the pane
-bind -T copy-mode MouseDragEnd1Pane send -X copy-selection
-bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-selection
+# when copying with the mouse:
+#   - if the pane is scrolled back (scroll level > 0), stay in copy mode at the
+#     current position
+#   - if the scroll level is 0 or scroll_position doesn't exist, copy the
+#     selection and cancel copy mode
+bind -T copy-mode MouseDragEnd1Pane if-shell -F '#{scroll_position}' 'send -X copy-selection' 'send -X copy-selection-and-cancel'
+bind -T copy-mode-vi MouseDragEnd1Pane if-shell -F '#{scroll_position}' 'send -X copy-selection' 'send -X copy-selection-and-cancel'
 
 # allow programs in panes to set the clipboard with OSC 52
 # (with 'external', tmux drops OSC 52 sequences emitted by programs;
